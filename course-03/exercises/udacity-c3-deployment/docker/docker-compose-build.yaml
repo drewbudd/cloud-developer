@@ -1,0 +1,22 @@
+version: "3"
+services:
+  reverseproxy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: almaguer/reverseproxy
+  backend_user:
+    build:
+      context: ../../udacity-c3-restapi-user
+      dockerfile: Dockerfile
+    image: almaguer/udacity-restapi-user
+  backend_feed:
+    build:
+      context: ../../udacity-c3-restapi-feed
+      dockerfile: Dockerfile
+    image: almaguer/udacity-restapi-feed
+  frontend:
+    build:
+      context: ../../udacity-c3-frontend
+      dockerfile: Dockerfile
+    image: almaguer/udacity-frontend:local
