@@ -1,0 +1,34 @@
+version: "3"
+services:
+  reverseproxy:
+      image: almaguer/reverseproxy
+      ports:
+          - 8080:8080
+      restart: always
+      depends_on:
+        - backend-user
+        - backend-feed     
+  backend-user:
+    image: almaguer/udacity-restapi-user
+    volumes:
+      - $HOME/.aws:/root/.aws
+    env_file:
+      - ./postgres.env
+      - ./aws.env
+      - ./jwt.env
+    environment:
+      URL: "http://localhost:8100"
+  backend-feed:
+    image: almaguer/udacity-restapi-feed
+    volumes:
+      - $HOME/.aws:/root/.aws
+    env_file:
+      - ./postgres.env
+      - ./aws.env
+      - ./jwt.env
+    environment:
+      URL: "http://localhost:8100"
+  frontend:
+    image: almaguer/udacity-frontend:local
+    ports:
+      - "8100:80"
